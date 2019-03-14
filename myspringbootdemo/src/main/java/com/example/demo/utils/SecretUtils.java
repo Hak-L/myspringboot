@@ -12,9 +12,10 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import org.apache.commons.lang3.StringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 
 public class SecretUtils {
     private static final Logger log = LoggerFactory.getLogger(SecretUtils.class);
@@ -27,7 +28,7 @@ public class SecretUtils {
 
     public static String encrypt(String data, Key key) {
         try {
-            if(!StringUtils.isBlank(data) && key != null) {
+            if(!StringUtils.isEmpty(data) && key != null) {
                 byte[] content = data.getBytes("UTF-8");
                 Cipher cipher = Cipher.getInstance(key.getAlgorithm());
                 cipher.init(1, key);
@@ -45,7 +46,7 @@ public class SecretUtils {
 
     public static String decrypt(String data, Key key) {
         try {
-            if(!StringUtils.isBlank(data) && key != null) {
+            if(!StringUtils.isEmpty(data) && key != null) {
                 byte[] content = parseHexStr2Byte(data);
                 Cipher cipher = Cipher.getInstance(key.getAlgorithm());
                 cipher.init(2, key);
@@ -63,7 +64,7 @@ public class SecretUtils {
 
     public static String encrypt(String data, String key, String algorithm) {
         try {
-            if(!StringUtils.isBlank(data) && !StringUtils.isBlank(key)) {
+            if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(key)) {
                 byte[] content = data.getBytes("UTF-8");
                 KeyGenerator kgen = KeyGenerator.getInstance(algorithm);
                 SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
@@ -88,7 +89,7 @@ public class SecretUtils {
 
     public static String decrypt(String data, String key, String algorithm) {
         try {
-            if(!StringUtils.isBlank(data) && !StringUtils.isBlank(key)) {
+            if(!StringUtils.isEmpty(data) && !StringUtils.isEmpty(key)) {
                 byte[] content = parseHexStr2Byte(data);
                 KeyGenerator kgen = KeyGenerator.getInstance(algorithm);
                 SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
